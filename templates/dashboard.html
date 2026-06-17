@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | Sistema de Asistencia RFID{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="fade-in-up" id="dashboardRoot" data-filtro-actual="{{ filtro_actual }}">
+
+    <!-- ============== FILTROS DE RANGO ============== -->
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+        <p class="mb-0" style="color: var(--gris-texto); font-size: 0.9rem;" id="etiquetaRango">
+            <i class="bi bi-calendar3"></i> {{ etiqueta_rango }}
+        </p>
+        <div class="btn-group filtro-rango" role="group" aria-label="Filtro de rango">
+            <button type="button" class="btn {{ 'btn-electrico' if filtro_actual == 'dia' else 'btn-outline-oscuro' }}" data-filtro="dia">Dia</button>
+            <button type="button" class="btn {{ 'btn-electrico' if filtro_actual == 'semana' else 'btn-outline-oscuro' }}" data-filtro="semana">Semana</button>
+            <button type="button" class="btn {{ 'btn-electrico' if filtro_actual == 'mes' else 'btn-outline-oscuro' }}" data-filtro="mes">Mes</button>
+        </div>
+    </div>
+
+    <!-- ============== TARJETAS DE RESUMEN ============== -->
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-xl-3">
+            <div class="stat-card">
+                <span class="stat-card-icon icon-azul"><i class="bi bi-people-fill"></i></span>
+                <div>
+                    <div class="stat-card-value" id="statTotalEstudiantes">&ndash;</div>
+                    <div class="stat-card-label">Estudiantes registrados</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-xl-3">
+            <div class="stat-card">
+                <span class="stat-card-icon icon-verde"><i class="bi bi-box-arrow-in-right"></i></span>
+                <div>
+                    <div class="stat-card-value" id="statEntradasHoy">&ndash;</div>
+                    <div class="stat-card-label">Entradas hoy</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-xl-3">
+            <div class="stat-card">
+                <span class="stat-card-icon icon-naranja"><i class="bi bi-box-arrow-right"></i></span>
+                <div>
+                    <div class="stat-card-value" id="statSalidasHoy">&ndash;</div>
+                    <div class="stat-card-label">Salidas hoy</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-xl-3">
+            <div class="stat-card">
+                <span class="stat-card-icon icon-oscuro"><i class="bi bi-person-check"></i></span>
+                <div>
+                    <div class="stat-card-value" id="statUltimoEstudiante" style="font-size: 1.05rem;">&ndash;</div>
+                    <div class="stat-card-label">Ultimo estudiante registrado</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-card mb-4">
+        <div class="panel-card-header">
+            <h3><i class="bi bi-clock-history"></i> Ultimo acceso detectado</h3>
+        </div>
+        <p class="mb-0" id="statUltimoAcceso" style="color: var(--gris-texto);">Cargando...</p>
+    </div>
+
+    <!-- ============== GRAFICOS ============== -->
+    <div class="row g-3 mb-4">
+        <div class="col-lg-6">
+            <div class="panel-card">
+                <div class="panel-card-header"><h3><i class="bi bi-bar-chart-line"></i> Entradas por dia</h3></div>
+                <canvas id="graficoEntradas" height="220"></canvas>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="panel-card">
+                <div class="panel-card-header"><h3><i class="bi bi-bar-chart-line"></i> Salidas por dia</h3></div>
+                <canvas id="graficoSalidas" height="220"></canvas>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="panel-card">
+                <div class="panel-card-header"><h3><i class="bi bi-graph-up"></i> Asistencias semanales</h3></div>
+                <canvas id="graficoSemanal" height="220"></canvas>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="panel-card">
+                <div class="panel-card-header"><h3><i class="bi bi-graph-up"></i> Asistencias mensuales</h3></div>
+                <canvas id="graficoMensual" height="220"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============== TABLA DE ASISTENCIAS ============== -->
+    <div class="panel-card">
+        <div class="panel-card-header">
+            <h3><i class="bi bi-table"></i> Registro de asistencias</h3>
+        </div>
+        <div class="table-responsive">
+            <table id="tablaAsistencias" class="table table-hover w-100">
+                <thead>
+                    <tr>
+                        <th>UID</th>
+                        <th>Nombre</th>
+                        <th>Evento</th>
+                        <th>Fecha y hora</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

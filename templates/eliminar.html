@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Eliminar estudiante | Sistema de Asistencia RFID{% endblock %}
+{% block page_title %}Eliminar estudiante{% endblock %}
+
+{% block content %}
+<div class="fade-in-up form-shell">
+
+    <div class="panel-card">
+        <div class="panel-card-header">
+            <h3><i class="bi bi-person-x"></i> Estudiantes registrados</h3>
+            <span class="badge text-bg-light" style="color: var(--gris-texto);">{{ estudiantes|length }} en total</span>
+        </div>
+
+        <div id="listaEstudiantes">
+            {% if estudiantes|length == 0 %}
+                <p class="text-center py-4" style="color: var(--gris-texto);">
+                    <i class="bi bi-inbox" style="font-size: 1.5rem;"></i><br>
+                    No hay estudiantes registrados.
+                </p>
+            {% else %}
+                {% for estudiante in estudiantes %}
+                <div class="estudiante-row" data-uid="{{ estudiante.uid }}">
+                    <div class="d-flex align-items-center gap-3">
+                        <span class="estudiante-avatar">{{ estudiante.nombre[:1]|upper }}</span>
+                        <div>
+                            <div class="fw-semibold">{{ estudiante.nombre }}</div>
+                            <div class="mono" style="color: var(--gris-texto); font-size: 0.82rem;">{{ estudiante.uid }}</div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-outline-oscuro btn-sm btn-eliminar"
+                            data-uid="{{ estudiante.uid }}" data-nombre="{{ estudiante.nombre }}">
+                        <i class="bi bi-trash3 text-danger"></i> Eliminar
+                    </button>
+                </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/eliminar.js') }}"></script>
+{% endblock %}

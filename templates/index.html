@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio | Sistema de Asistencia RFID{% endblock %}
+{% block page_title %}Inicio{% endblock %}
+
+{% block content %}
+<div class="fade-in-up">
+
+    <!-- ============== TARJETA DE BIENVENIDA ============== -->
+    <div class="panel-card mb-4 d-flex flex-wrap align-items-center justify-content-between gap-3">
+        <div>
+            <h2 class="font-titulo mb-1"><i class="bi bi-broadcast text-primary"></i> Sistema de Asistencia RFID</h2>
+            <p class="mb-0 text-secondary" style="color: var(--gris-texto);">
+                Control de entradas y salidas mediante tarjetas RFID y dispositivos ESP32,
+                con notificaciones automaticas por Telegram.
+            </p>
+        </div>
+        <div class="stat-card" style="min-width: 220px;">
+            <span class="stat-card-icon icon-azul"><i class="bi bi-people-fill"></i></span>
+            <div>
+                <div class="stat-card-value">{{ total_estudiantes }}</div>
+                <div class="stat-card-label">Estudiantes registrados</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============== ACCESOS RAPIDOS ============== -->
+    <h3 class="font-titulo mb-3" style="font-size: 1.05rem;">Accesos rapidos</h3>
+    <div class="row g-3">
+
+        <div class="col-md-4">
+            <a href="{{ url_for('dashboard.panel') }}" class="panel-card d-block h-100 text-decoration-none fade-in-up">
+                <span class="stat-card-icon icon-azul mb-3"><i class="bi bi-graph-up-arrow"></i></span>
+                <h3 class="font-titulo mb-1" style="font-size: 1rem;">Dashboard</h3>
+                <p class="mb-0" style="color: var(--gris-texto); font-size: 0.88rem;">
+                    Estadisticas en tiempo real, graficos de asistencia y tabla detallada de marcajes.
+                </p>
+            </a>
+        </div>
+
+        <div class="col-md-4">
+            <a href="{{ url_for('students.agregar') }}" class="panel-card d-block h-100 text-decoration-none fade-in-up">
+                <span class="stat-card-icon icon-verde mb-3"><i class="bi bi-person-plus"></i></span>
+                <h3 class="font-titulo mb-1" style="font-size: 1rem;">Agregar estudiante</h3>
+                <p class="mb-0" style="color: var(--gris-texto); font-size: 0.88rem;">
+                    Registra una nueva tarjeta RFID y vincula un chat de Telegram para avisos.
+                </p>
+            </a>
+        </div>
+
+        <div class="col-md-4">
+            <a href="{{ url_for('students.eliminar') }}" class="panel-card d-block h-100 text-decoration-none fade-in-up">
+                <span class="stat-card-icon icon-naranja mb-3"><i class="bi bi-person-x"></i></span>
+                <h3 class="font-titulo mb-1" style="font-size: 1rem;">Eliminar estudiante</h3>
+                <p class="mb-0" style="color: var(--gris-texto); font-size: 0.88rem;">
+                    Da de baja una tarjeta del sistema, con confirmacion previa.
+                </p>
+            </a>
+        </div>
+    </div>
+
+    <!-- ============== ESTADO DEL SERVIDOR ============== -->
+    <div class="panel-card mt-4">
+        <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="status-dot"></span>
+            <strong class="font-titulo" style="font-size: 0.95rem;">Servidor en linea</strong>
+        </div>
+        <p class="mb-0" style="color: var(--gris-texto); font-size: 0.88rem;">
+            El endpoint <code class="mono">/dato</code> esta listo para recibir lecturas de los dispositivos ESP32 via POST con JSON.
+        </p>
+    </div>
+
+</div>
+{% endblock %}

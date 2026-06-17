@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{% block title %}Sistema de Asistencia RFID{% endblock %}</title>
+
+    <!-- Tipografias: Plus Jakarta Sans para titulos, Inter para texto/UI,
+         JetBrains Mono para UIDs y marcas de tiempo (codigos de dispositivo) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
+    <!-- DataTables (Bootstrap 5 theme) + Botones de exportacion -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.13.11/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/buttons/2.4.3/css/buttons.bootstrap5.min.css">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<div class="app-shell">
+
+    <!-- ============== SIDEBAR ============== -->
+    <aside class="sidebar offcanvas-lg offcanvas-start" tabindex="-1" id="sidebarPanel">
+        <div class="sidebar-brand">
+            <span class="sidebar-brand-icon"><i class="bi bi-broadcast"></i></span>
+            <div class="sidebar-brand-text">
+                <strong>RFID Asistencia</strong>
+                <small>Panel de control</small>
+            </div>
+            <button type="button" class="btn-close btn-close-white d-lg-none ms-auto" data-bs-dismiss="offcanvas" data-bs-target="#sidebarPanel" aria-label="Cerrar"></button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="{{ url_for('main.inicio') }}" class="sidebar-link {% if request.endpoint == 'main.inicio' %}active{% endif %}">
+                <i class="bi bi-house-door"></i> <span>Inicio</span>
+            </a>
+            <a href="{{ url_for('dashboard.panel') }}" class="sidebar-link {% if request.endpoint == 'dashboard.panel' %}active{% endif %}">
+                <i class="bi bi-graph-up-arrow"></i> <span>Dashboard</span>
+            </a>
+            <a href="{{ url_for('students.agregar') }}" class="sidebar-link {% if request.endpoint == 'students.agregar' %}active{% endif %}">
+                <i class="bi bi-person-plus"></i> <span>Agregar estudiante</span>
+            </a>
+            <a href="{{ url_for('students.eliminar') }}" class="sidebar-link {% if request.endpoint == 'students.eliminar' %}active{% endif %}">
+                <i class="bi bi-person-x"></i> <span>Eliminar estudiante</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <span class="status-dot"></span> Servidor en linea
+        </div>
+    </aside>
+
+    <!-- ============== CONTENIDO ============== -->
+    <div class="app-main">
+
+        <header class="topbar">
+            <button class="btn topbar-toggle d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarPanel" aria-controls="sidebarPanel">
+                <i class="bi bi-list"></i>
+            </button>
+            <h1 class="topbar-title">{% block page_title %}{% endblock %}</h1>
+            <div class="topbar-clock" id="relojActual"></div>
+        </header>
+
+        <main class="app-content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</div>
+
+<!-- Bootstrap 5 JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<!-- SweetAlert2 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.12.4/sweetalert2.all.min.js"></script>
+<!-- jQuery (requerido por DataTables) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<!-- DataTables + Botones de exportacion -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.13.11/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.13.11/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/buttons/2.4.3/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/buttons/2.4.3/js/buttons.bootstrap5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/buttons/2.4.3/js/buttons.html5.min.js"></script>
+<!-- Chart.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% block extra_js %}{% endblock %}
+
+</body>
+</html>

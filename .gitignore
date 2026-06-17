@@ -1,0 +1,32 @@
+# Entornos y secretos
+.env
+*.env
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Base de datos
+database/*.db
+database/*.sqlite3
+*.db-journal
+
+# Logs
+logs/*.log
+logs/*.log.*
+
+# Editor / SO
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Distribucion
+dist/
+build/

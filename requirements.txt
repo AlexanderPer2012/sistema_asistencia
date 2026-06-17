@@ -1,0 +1,17 @@
+# Framework web
+Flask==3.0.3
+Werkzeug==3.0.3
+
+# Formularios y proteccion CSRF
+Flask-WTF==1.2.1
+WTForms==3.1.2
+
+# Variables de entorno
+python-dotenv==1.0.1
+
+# Cliente HTTP para la API de Telegram
+requests==2.32.3
+
+# Servidor WSGI recomendado para produccion
+# (no se usa app.run() en produccion, ver README.md)
+waitress==3.0.0

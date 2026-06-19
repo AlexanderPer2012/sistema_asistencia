@@ -16,7 +16,7 @@ from dotenv import load_dotenv
 
 # Carga el archivo .env ubicado en la raiz del proyecto (si existe).
 BASE_DIR = Path(__file__).resolve().parent
-load_dotenv(BASE_DIR / ".env")
+load_dotenv(BASE_DIR / ".env", override=True)
 
 
 def _str_to_bool(valor: str) -> bool:
